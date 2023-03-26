@@ -19,6 +19,35 @@ export interface ChatHistoryProps extends ChatCompletionRequestMessage {
   error?: boolean,
 }
 
+async function weather(location: string) {
+  try {
+    const response = await fetch('https://api.m3o.com/v1/weather/Now', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${process.env.WEATHER_API_KEY}`,
+      },
+      body: JSON.stringify({ location}),
+    });
+
+    const data = await response.json();
+
+    return data;
+
+    return {
+      c: data.temp_c,
+      f: data.temp_f,
+      feels_like_c: data.feels_like_c,
+      feels_like_f: data.feels_like_f,
+    }
+
+  } catch (error: any) {
+    return {
+      error: error.message || 'Something went wrong!'
+    }
+  }
+}
+
 /**
  * API call executed server side
  */
@@ -35,6 +64,13 @@ export async function action({request}: ActionArgs): Promise<ReturnedDataProps> 
   try {
     const openai = new OpenAIApi(conf);
 
+
+    // console.log(weatherResponse)
+
+
+    // weather call
+
+
     const chat = await openai.createChatCompletion({
       model: 'gpt-3.5-turbo',
       messages: [
@@ -47,7 +83,27 @@ export async function action({request}: ActionArgs): Promise<ReturnedDataProps> 
       ],
     });
 
-    const answer = chat.data.choices[0].message?.content;
+    let answer = chat.data.choices[0].message?.content;
+
+    // if the user is looking for weather information
+    if (answer?.startsWith('WEATHER=')) {
+      const weatherResponse = await weather(answer.split('WEATHER=')[1]);
+      console.log(weatherResponse)
+
+      const chat = await openai.createChatCompletion({
+        model: 'gpt-3.5-turbo',
+        messages: [
+          ...context,
+          ...chatHistory,
+          {
+            role: 'user',
+            content: `hint: ${JSON.stringify(weatherResponse)}`,
+          },
+        ],
+      });
+
+      answer = chat.data.choices[0].message?.content;
+    }
 
     return {
       message: body.get('message') as string,
@@ -208,8 +264,8 @@ export default function IndexPage() {
         {chatHistory.length === 0 && (
           <div className="intro p-8 grid place-items-center h-full text-center">
             <div className="intro-content">
-              <h1 className="text-4xl font-semibold">Open AI base</h1>
-              <p className="mt-4">Ask anything 😊</p>
+              <h1 className="text-4xl font-semibold">Weather assistant</h1>
+              <p className="mt-4">Uses the <a href="https://arxiv.org/abs/2302.04761" target="_blank">Toolformer</a> model to check current weather in any city 🌤</p>
             </div>
           </div>
         )}
@@ -240,13 +296,13 @@ export default function IndexPage() {
           className="max-w-maxWidth mx-auto"
         >
           <div className="input-wrap relative">
-            <label htmlFor="message" className="absolute left[-9999px] w-px h-px overflow-hidden">Ask a question about Editions</label>
+            <label htmlFor="message" className="absolute left[-9999px] w-px h-px overflow-hidden">What is the weather in Toronto Canada about Editions</label>
             <textarea
               id="message"
               aria-disabled={isSubmitting}
               ref={inputRef}
               className="auto-growing-input m-0 appearance-none resize-none text-base p-3 border border-borderColor rounded w-full block leading-6"
-              placeholder="Ask a question"
+              placeholder="What is the weather in Toronto Canada"
               name="message"
               onChange={handleTextareaChange}
               required

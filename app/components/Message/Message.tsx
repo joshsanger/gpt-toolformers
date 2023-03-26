@@ -1,7 +1,7 @@
 import cn from 'classnames';
 import ReactMarkdown from 'react-markdown';
 
-import {Assistant as AssistantIcon, User as UserIcon} from '~/components/Icons';
+import {Weather as WeatherIcon, User as UserIcon} from '~/components/Icons';
 
 import {Role} from '~/types';
 
@@ -20,19 +20,18 @@ export interface RoleIconProps {
 /**
  * Returns the role icon based on the role (user, assistant, system)
  * @param role The role of the message
- * @param error Set to true if the message is an error
  *
  * @returns The role icon
  */
-const RoleIcon = ({role, error}: RoleIconProps) => {
+const RoleIcon = ({role}: RoleIconProps) => {
   switch (role) {
     case 'system':
     case 'assistant':
-      return <AssistantIcon error={error} />;
+      return <WeatherIcon/>;
     case 'user':
       return <UserIcon />;
     default:
-      return <AssistantIcon />;;
+      return <WeatherIcon />;;
   };
 };
 
@@ -68,7 +67,7 @@ export default function Message({content, error, key, role = 'user'}: MessagePro
           role !== 'user' && 'bg-dark-shade',
           error
         )}>
-          {<RoleIcon role={role} error={error} />}
+          {<RoleIcon role={role} />}
         </span>
         <div className="response">
           <ReactMarkdown children={content} />

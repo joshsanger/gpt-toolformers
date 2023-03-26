@@ -7,5 +7,6 @@
 import Send from './Send';
 import Assistant from './Assistant';
 import User from './User';
+import Weather from './Weather';
 
-export {Send, Assistant, User};
+export {Send, Assistant, User, Weather};

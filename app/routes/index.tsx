@@ -296,13 +296,13 @@ export default function IndexPage() {
           className="max-w-maxWidth mx-auto"
         >
           <div className="input-wrap relative">
-            <label htmlFor="message" className="absolute left[-9999px] w-px h-px overflow-hidden">What is the weather in Toronto Canada about Editions</label>
+            <label htmlFor="message" className="absolute left[-9999px] w-px h-px overflow-hidden">What is the weather in Toronto Canada? about Editions</label>
             <textarea
               id="message"
               aria-disabled={isSubmitting}
               ref={inputRef}
               className="auto-growing-input m-0 appearance-none resize-none text-base p-3 border border-borderColor rounded w-full block leading-6"
-              placeholder="What is the weather in Toronto Canada"
+              placeholder="What is the weather in Toronto Canada?"
               name="message"
               onChange={handleTextareaChange}
               required

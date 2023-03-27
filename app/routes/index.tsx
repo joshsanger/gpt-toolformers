@@ -34,13 +34,6 @@ async function weather(location: string) {
 
     return data;
 
-    return {
-      c: data.temp_c,
-      f: data.temp_f,
-      feels_like_c: data.feels_like_c,
-      feels_like_f: data.feels_like_f,
-    }
-
   } catch (error: any) {
     return {
       error: error.message || 'Something went wrong!'
@@ -64,13 +57,6 @@ export async function action({request}: ActionArgs): Promise<ReturnedDataProps> 
   try {
     const openai = new OpenAIApi(conf);
 
-
-    // console.log(weatherResponse)
-
-
-    // weather call
-
-
     const chat = await openai.createChatCompletion({
       model: 'gpt-3.5-turbo',
       messages: [
@@ -88,7 +74,6 @@ export async function action({request}: ActionArgs): Promise<ReturnedDataProps> 
     // if the user is looking for weather information
     if (answer?.startsWith('WEATHER=')) {
       const weatherResponse = await weather(answer.split('WEATHER=')[1]);
-      console.log(weatherResponse)
 
       const chat = await openai.createChatCompletion({
         model: 'gpt-3.5-turbo',

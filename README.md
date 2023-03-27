@@ -3,6 +3,8 @@ This repo's purpose is to be a starting point for using the Toolformer modal  Op
 
 It is meant to be forked, cloned, and copied so folks can play around with the API. Please customize the styling, break things, and most of all, have fun!
 
+[Check out the step by step guide for creating this](https://medium.com/@joshua.v.sanger/implementing-toolformer-with-openai-and-remix-22997dd46499)
+
 <img width="1170" alt="Screen Shot 2023-03-26 at 11 05 00 AM" src="https://user-images.githubusercontent.com/5130040/227925516-9c5fedac-455c-45c1-a6cb-508297449ba7.png">
 
 

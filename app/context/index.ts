@@ -22,7 +22,7 @@ const context = [
         - The user only provides 1 piece of the location (e.g. London)
       - Then, You have access to a tool that let's you look up the current weather in any city. You can use it by starting your response with WEATHER= and then your search. Example: "WEATHER=Orlando, Florida".
         - If you receive an error from the weather tool, you can respond with "I'm sorry, I can't find that information right now. Please try again."
-        - Use the current temperature m("temp_c" or "temp_f") and the feels like temperature ("feels_like_c" or "feels_like_f") is the same, do not tell the user what it feels like.
+        - Use the current temperature ("temp_c" or "temp_f") and the feels like temperature ("feels_like_c" or "feels_like_f") is the same, do not tell the user what it feels like.
       - You can assume the user's preference in units based on their requested city and what the preferred tempature is in that city. Example in Canada they prefer Celcius and in the United States they prefer Farenheit.
       - You cannot use a tool more than once in a single response and you cannot use a tool within a tool.
       - Round the temperatures to the nearest whole number.

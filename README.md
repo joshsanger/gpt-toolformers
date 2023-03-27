@@ -3,19 +3,20 @@ This repo's purpose is to be a starting point for using the Toolformer modal  Op
 
 It is meant to be forked, cloned, and copied so folks can play around with the API. Please customize the styling, break things, and most of all, have fun!
 
-<img width="999" alt="Screen Shot 2023-03-19 at 10 54 56 PM" src="https://user-images.githubusercontent.com/5130040/226919242-846e12ce-a31c-4281-89d5-81267e76842f.png">
+<img width="1170" alt="Screen Shot 2023-03-26 at 11 05 00 AM" src="https://user-images.githubusercontent.com/5130040/227925516-9c5fedac-455c-45c1-a6cb-508297449ba7.png">
 
 
 # Getting started
 1. Clone or fork the repo
 2. Run `npm i`
-3. Create an `.env` file in root and add your [Open AI API key](https://platform.openai.com/account/api-keys) to it (this file is not tracked)
+3. Create an `.env` file in root and add your [Open AI API key](https://platform.openai.com/account/api-keys) and your [M3O API key](https://m3o.com/getting-started) (this file is not tracked)
 ```javaScript
-OPENAI_API_KEY=superSecretAPIKey
+OPENAI_API_KEY=yourSecretApiKeyHere
+WEATHER_API_KEY=yourWeatherPersonalTokenHere
 ```
 4. Run `npm run dev`
 5. Open in your browser `http://localhost:3000/`
-6. Start playing with the context you wish to add in `/app/context/index.ts`
+6. Start playing with the context, rules, and tools you wish to add in `/app/context/index.ts`
 
 # Under the hood
 This is build using [Remix](https://remix.run/) (a react based framework), [Typescript](https://www.typescriptlang.org/), and uses [Tailwind](https://tailwindcss.com/) for CSS. Some key notes:

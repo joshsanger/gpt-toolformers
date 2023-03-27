@@ -1,4 +1,4 @@
-import {ChatCompletionRequestMessage} from "openai";
+import {type ChatCompletionRequestMessage} from 'openai';
 
 /**
  * This is the context for the chat completion request. It trains the model on
@@ -20,7 +20,7 @@ const context = [
       - You may ask the user to clarify the location if:
         - You do not know where they are talking about
         - The user only provides 1 piece of the location (e.g. London)
-      - Then, You have access to a tool that let's you look up the current weather in any city. You can use it by starting your response with WEATHER= and then your search. Example: WEATHER=Orlando, Florida".
+      - Then, You have access to a tool that let's you look up the current weather in any city. You can use it by starting your response with WEATHER= and then your search. Example: "WEATHER=Orlando, Florida".
         - If you receive an error from the weather tool, you can respond with "I'm sorry, I can't find that information right now. Please try again."
         - Use the current temperature m("temp_c" or "temp_f") and the feels like temperature ("feels_like_c" or "feels_like_f") is the same, do not tell the user what it feels like.
       - You can assume the user's preference in units based on their requested city and what the preferred tempature is in that city. Example in Canada they prefer Celcius and in the United States they prefer Farenheit.

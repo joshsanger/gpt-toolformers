@@ -19,17 +19,24 @@ export interface ChatHistoryProps extends ChatCompletionRequestMessage {
   error?: boolean,
 }
 
-async function weather(location: string) {
-  try {
-    const response = await fetch('https://api.m3o.com/v1/weather/Now', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${process.env.WEATHER_API_KEY}`,
-      },
-      body: JSON.stringify({ location}),
-    });
+/**
+ * Uses M3O's weather API to fetch the weather for a given location
+ * @param location The desired location to fetch the weather for
+ * @returns Either the weather data or an error message
+ */
+async function getCurrentWeather(location: string) {
+  const url = 'https://api.m3o.com/v1/weather/Now';
+  const options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${process.env.WEATHER_API_KEY}`,
+    },
+    body: JSON.stringify({location}),
+  };
 
+  try {
+    const response = await fetch(url, options);
     const data = await response.json();
 
     return data;
@@ -71,23 +78,25 @@ export async function action({request}: ActionArgs): Promise<ReturnedDataProps> 
 
     let answer = chat.data.choices[0].message?.content;
 
-    // if the user is looking for weather information
+    // if the assistant is looking for weather information
     if (answer?.startsWith('WEATHER=')) {
-      const weatherResponse = await weather(answer.split('WEATHER=')[1]);
+      const desiredLocation = answer.split('WEATHER=')[1];
+      const weatherResponse = await getCurrentWeather(desiredLocation);
 
-      const chat = await openai.createChatCompletion({
+      const chatWithWeather = await openai.createChatCompletion({
         model: 'gpt-3.5-turbo',
         messages: [
           ...context,
           ...chatHistory,
           {
             role: 'user',
-            content: `hint: ${JSON.stringify(weatherResponse)}`,
+            content: `user: ${message}
+            hint: ${JSON.stringify(weatherResponse)}`,
           },
         ],
       });
 
-      answer = chat.data.choices[0].message?.content;
+      answer = chatWithWeather.data.choices[0].message?.content;
     }
 
     return {

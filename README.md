@@ -1,5 +1,5 @@
 # Implementing the Toolformer model with OpenAI and Remix
-This repo's purpose is to be a starting point for using the Toolformer modal  Open Ai's [gpt-3.5-turbo](https://platform.openai.com/docs/guides/chat) API.
+This repo's purpose is to be a starting point for using the Toolformer model with Open Ai's [gpt-3.5-turbo](https://platform.openai.com/docs/guides/chat) API.
 
 It is meant to be forked, cloned, and copied so folks can play around with the API. Please customize the styling, break things, and most of all, have fun!
 
